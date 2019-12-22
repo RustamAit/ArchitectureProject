@@ -1,0 +1,2 @@
+include ':app', ':database', ':domain', ':data', ':remote'
+rootProject.name='ArchitectureProject'
