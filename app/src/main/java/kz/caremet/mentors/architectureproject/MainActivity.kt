@@ -19,6 +19,12 @@ class MainActivity : AppCompatActivity() {
         questionRepository.fetchData()
         questionRepository.getQuestions().observeOn(AndroidSchedulers.mainThread()).subscribe {
             Log.d("DATA_TEST", ArrayList(it).toString())
+
+            TODO("Сделать отображение списка")
         }
+
+        TODO("Сделать Проваливание в вопрос ")
+        TODO("Вынести вопросы во viewModel")
+
     }
 }
