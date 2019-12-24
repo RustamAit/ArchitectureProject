@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_question.view.*
 import kz.caremet.mentors.architectureproject.R
+import kz.caremet.mentors.architectureproject.views.questions.OnItemQuestionClicked
 import kz.caremet.mentors.domain.models.Question
 
-class QuestionAdapter(private val dataset: List<Question>): RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>(){
+class QuestionAdapter(private val dataset: List<Question>, private val listener: OnItemQuestionClicked): RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionViewHolder {
         return QuestionViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_question, parent, false))
@@ -26,6 +27,12 @@ class QuestionAdapter(private val dataset: List<Question>): RecyclerView.Adapter
     inner class QuestionViewHolder(v: View): RecyclerView.ViewHolder(v){
         fun bind(p: Question){
             itemView.questionText.text = p.text
+
+            itemView.setOnClickListener {
+                p.uuid?.let{
+                    listener.startDetailsFragment(it)
+                }
+            }
         }
     }
 

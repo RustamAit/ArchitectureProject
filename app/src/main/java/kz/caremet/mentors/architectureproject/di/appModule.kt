@@ -5,6 +5,7 @@ import kz.caremet.mentors.architectureproject.AppDatabase
 import kz.caremet.mentors.architectureproject.di.data.questionDataModule
 import kz.caremet.mentors.architectureproject.di.database.questionDbModule
 import kz.caremet.mentors.architectureproject.di.remote.questionRemoteModule
+import kz.caremet.mentors.architectureproject.di.view.questionModule
 import kz.caremet.mentors.architectureproject.utils.LoggerImpl
 import kz.caremet.mentors.remote.services.Logger
 import kz.caremet.mentors.remote.services.createOkHttpClient
@@ -25,4 +26,4 @@ val appModule = module {
 }
 
 
-val appModules = listOf(appModule,  questionRemoteModule, questionDbModule, questionDataModule)
+val appModules = listOf(appModule,  questionRemoteModule, questionDbModule, questionDataModule, questionModule)

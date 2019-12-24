@@ -6,7 +6,7 @@
     android:id="@+id/mainFragmentLayout"
     android:background="#b7b7b7"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".views.QuestionListFragment">
+    tools:context=".views.questions.QuestionListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recList"

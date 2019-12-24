@@ -1,29 +1,25 @@
-package kz.caremet.mentors.architectureproject.views
+package kz.caremet.mentors.architectureproject.views.questions
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_question_list.*
 
 import kz.caremet.mentors.architectureproject.R
-import kz.caremet.mentors.architectureproject.retrofit.QuestionService
-import kz.caremet.mentors.architectureproject.retrofit.createOkHttpClient
-import kz.caremet.mentors.architectureproject.retrofit.createService
-import kz.caremet.mentors.architectureproject.utils.LoggerImpl
 import kz.caremet.mentors.architectureproject.views.adapters.QuestionAdapter
+import kz.caremet.mentors.architectureproject.views.questions.viewModel.questionList.QuestionListViewModel
+import org.koin.android.ext.android.inject
 
 
-class QuestionListFragment : Fragment() {
+class QuestionListFragment() : Fragment(), OnItemQuestionClicked {
 
     var listener: OnQuestionFragmentInteracrtionListener? = null
+    val viewModel: QuestionListViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,18 +37,14 @@ class QuestionListFragment : Fragment() {
 
 
         recList.layoutManager = LinearLayoutManager(context)
-
-
-        val questionService: QuestionService? =
-            createService<QuestionService>(createOkHttpClient(LoggerImpl()), "https://qa.pbo.kz/") as? QuestionService
-
-        questionService?.getQuestions("Bearer hlSW-aQskBhA-aTBDDR37rhQGYQQJ59H3NWHurw208c", 133)
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe { it ->
-            recList.adapter = QuestionAdapter(it)
+        viewModel.getQuestionList().observeOn(AndroidSchedulers.mainThread()).subscribe{
+            recList?.adapter = QuestionAdapter(it, this)
         }
     }
 
+    override fun startDetailsFragment(uuid: String) {
+        listener?.startDetailsFragment(uuid)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
